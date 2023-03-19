@@ -16,19 +16,20 @@ import sys
 CONFIGURABLE STATIC VARIABLES
 Please configure your setup correctly or else the tracker 
 will not be able to send notifications and track correct companies!
-You can generate a Google Apps Password
+(You must generate a Google Apps Password)
 """
 email = "my@gmail.com" # make sure to input a valid email address (you will receive notifications here)
 default_password = "password" # put password here to store it, instead of having to input everytime
-password = getpass("Type your password and press enter: ", sys.stdout) if default_password == "password" else default_password # input the Google Apps (16-Digit) Password generated under a "MAIL" application.
 tickers = ["LIST", "OF", "STOCKS", "TO", "TRACK"] # make sure the stock tickers are valid (eg. AAPL or NFLX)
 error_constant = 0.03 # 3% error in support and resistance calculations
-timeout = 600 # timeout duration in seconds
+timeout = 3600 # timeout duration in seconds
 ppps = 3000 # Preferable Profit Per Stock (PPPS in dollars)
 plps = 400 # Preferable Loss Per Stock (PLPS in dollars)
 limit_risk = False # Set strict limits to the amount of loss you are willing to make (less risk, less gain)
 
 
+# input the Google Apps (16-Digit) Password generated under a "MAIL" application and a "CUSTOM" device.
+password = getpass("Type your password and press enter: ", sys.stdout) if default_password == "password" else default_password
 port = 465 # For SSL
 yf.pdr_override()
 
