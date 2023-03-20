@@ -2,7 +2,7 @@
 > Stock trading algorithms using trend-based statistics for the trading bots in the stock market.
 
 ## DISCLAIMER
-I am not responsible for any profits or losses you receive. Use this responsibly. I don't suggest using this without knowing how it works.
+I am not responsible for any profits or losses you receive. Please use this responsibly. I don't suggest using this without knowing how it works. Be careful with your investments and don't blindly trust the stock tracker.
 
 ## Support-Resistance Stock Trading Model
 The support and resistance trading strategy is one of the most common and legitimate trading strategies. We analyze the company by performing statistical analysis of that company's previous stock price history. If we analyze only the last 5 months, results will usually appear in around 1-2 months time. The larger the period of history analyzed, the more precise the predictions will be.
@@ -42,14 +42,11 @@ Just 4 days into testing, and I have already made slightly over $2000 USD.
 ![image](https://user-images.githubusercontent.com/47650058/226206146-f3564f15-fd59-4a98-b22f-69b85ce98b39.png)
 
 ## Analyze Stock
-The `analyze_stock.py` script allows a user to graph, visualize and analyze specific stock price histories. Multiple examples of the visualization have been shown above.<br><br>
-
-### Usage
-You can run this script by using this command:
-```console
-$ python3 analyze_stock.py
-```
-and then inputting the ticker of the company you want to graph using the script.
+The `analyze_stock.py` script allows a user to graph, visualize and analyze specific stock price histories. Multiple examples of the visualization have been shown above.
+<br><br>
+Analyzing stocks is very important because you want to be able to expand your investments as large as you can and invest in as many companies as possible to maximize your profits.
+<br><br>
+Use this script to analyze stocks and pick companies that you want to be able to invest in the future. This utility will come useful if you apply the advice I have listed above. Try to find stocks with stable price history. If companies have approximately parallel support and resistance lines, it shows signs of stability and is the least risky way to gain profit. The best case scenario would be to have parallel support and resistance lines that have a good amount of distance from each other so you can make some good profit.
 
 ## Stock Tracker Bot
 The `tracker.py` script runs a program that will constantly track stock prices periodically. This program can be run on a server 24/7 and will constantly notify you on when to invest or sell for maximum profit.
@@ -74,7 +71,27 @@ This is the password you will be using to connect the stock bot to your gmail.
 - `plps`: Specify the preferable amount of loss per stock you would like to have using this bot. (**$400 USD** by default)
 - `limit_risk`: Specify whether you would like strict limits on the amount of loss you are willing to make per stock. It will not make more than `plps` loss per stock. (**False** by dafault)
 
-### Usage
+## Usage
+
+### Prerequisites
+Make sure you have [python3 with pip]() installed. Also have [git](https://git-scm.com/downloads) installed, or else download the zip file from the latest release in the [releases page](https://github.com/BooleanCube/stock-bot/releases).
+<br><br>
+To be able to run all scripts, first you need to download this project and install all prerequisite Python packages:
+```console
+$ git clone https://github.com/BooleanCube/stock-bot.git
+$ cd stock-bot/
+$ pip install -r requirements.txt
+```
+
+### Analyze Stock History Graphs
+You can run the `analyze_stock.py` script by using this command:
+```console
+$ python3 analyze_stock.py
+```
+and then inputting the ticker of the company you want to graph using the script.
+<br>
+
+### Stock Tracker Notification Bot
 You can start the stock bot by running this command in a terminal (suggest to not run this within IDE consoles)
 ```console
 $ python3 tracker.py
