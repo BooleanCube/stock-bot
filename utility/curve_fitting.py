@@ -67,19 +67,26 @@ def _poly_order(p, m):
 
 
 def _fit_edge(x, window_start, window_stop, interp_start, interp_stop, axis, polyorder, deriv, delta, y):
-    # Get the edge into a (window_length, -1) array.
-    x_edge = axis_slice(x, start=window_start, stop=window_stop, axis=axis)
-    if axis == 0 or axis == -x.ndim:
-        xx_edge = x_edge
+    # If x is 1D, simply slice it normally.
+    if x.ndim == 1:
+        xx_edge = x[window_start:window_stop].reshape(-1, 1)
         swapped = False
     else:
-        xx_edge = x_edge.swapaxes(axis, 0)
-        swapped = True
-    xx_edge = xx_edge.reshape(xx_edge.shape[0], -1)
+        x_edge = axis_slice(x, start=window_start, stop=window_stop, axis=axis)
+        if axis == 0 or axis == -x.ndim:
+            xx_edge = x_edge
+            swapped = False
+        else:
+            xx_edge = x_edge.swapaxes(axis, 0)
+            swapped = True
+        xx_edge = xx_edge.reshape(xx_edge.shape[0], -1)
 
-    # Fit the edges.  poly_coeffs has shape (polyorder + 1, -1),
-    # where '-1' is the same as in xx_edge.
-    poly_coeffs = np.polyfit(np.arange(0, window_stop - window_start), xx_edge, polyorder)
+    # Perform the polynomial fit using the correct x-values.
+    try:
+        poly_coeffs = np.polyfit(np.arange(xx_edge.shape[0]), xx_edge, polyorder, rcond=1e-10)
+    except Exception as e:
+        print("np.polyfit failed:", e)
+        raise
 
     if deriv > 0:
         poly_coeffs = _poly_order(poly_coeffs, deriv)
@@ -88,14 +95,14 @@ def _fit_edge(x, window_start, window_stop, interp_start, interp_stop, axis, pol
     i = np.arange(interp_start - window_start, interp_stop - window_start)
     values = np.polyval(poly_coeffs, i.reshape(-1, 1)) / (delta ** deriv)
 
-    # Now put the values into the appropriate slice of y.
-    # First reshape values to match y.
+    # Reshape values to match y.
     shp = list(y.shape)
     shp[0], shp[axis] = shp[axis], shp[0]
     values = values.reshape(interp_stop - interp_start, *shp[1:])
-    if swapped: values = values.swapaxes(0, axis)
+    if swapped:
+        values = values.swapaxes(0, axis)
 
-    # Get a view of the data to be replaced by values.
+    # Replace the edge in y with the fitted values.
     y_edge = axis_slice(y, start=interp_start, stop=interp_stop, axis=axis)
     y_edge[...] = values
 
