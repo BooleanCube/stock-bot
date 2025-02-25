@@ -83,6 +83,14 @@ $ cd stock-bot/
 $ pip install -r requirements.txt
 ```
 
+#### NixOS Setup
+To be able to set up the python virtual environment properly on NixOS, you can run:
+```console
+$ git clone https://github.com/BooleanCube/stock-bot.git
+$ cd stock-bot
+$ nix-shell
+```
+
 ### Analyze Stock History Graphs
 You can run the `analyze_stock.py` script by using this command:
 ```console

@@ -3,15 +3,20 @@ import matplotlib.pyplot as plt
 from utility.linear_regression import *
 from utility.curve_fitting import *
 from utility.graph_analysis import *
-from datetime import datetime
+from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import matplotlib
+import numpy as np
 
 
 matplotlib.use("TkAgg")
 
+end_date = datetime.today() - timedelta(days=1)
+start_date = end_date - relativedelta(months=6)
+
 symbol = input("Please input a correct stock symbol: ")
-df = yf.download(symbol, start=datetime.today()-relativedelta(months=6), end=datetime.today())
+df = yf.download(symbol, start=start_date, end=end_date)
+print(df)
 
 series = df['Close'].squeeze()
 series.index = np.arange(len(series))
